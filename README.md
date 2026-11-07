@@ -10,6 +10,10 @@ Ask for a machine in one sentence. Claude builds it as one offline HTML page on 
 
 **Hierodula HX-6**, a robotic praying mantis with 356 moving parts: [watch the 27 s film (1080p60, with sound)](docs/mantis-hx6.mp4) · source in `sims/mantis-*`
 
+![Callinectes CB-9 robotic blue crab, 500 moving parts](docs/crab.gif)
+
+**Callinectes CB-9**, a robotic blue crab with 500 moving parts: [watch the 28 s film (1080p60, with sound)](docs/crab-cb9.mp4) · source in `sims/crab-*`
+
 ## Install
 
 ```
@@ -32,10 +36,11 @@ One line is enough; the house style (dark console, lime accent, panels, auto tou
 
 > Teardown a hydraulic excavator arm and record the film.
 
-Open the mantis locally:
+Open a machine locally:
 
 ```
 node sims/build.mjs mantis-live      # → teardown-out/dist/mantis-live.html
+node sims/build.mjs crab-live        # → teardown-out/dist/crab-live.html
 ```
 
 ## What is inside
@@ -43,12 +48,12 @@ node sims/build.mjs mantis-live      # → teardown-out/dist/mantis-live.html
 | | |
 |---|---|
 | `SKILL.md` | What Claude reads: the house style, how a machine is built, the rules that make it look right, the review loop. |
-| `sims/mantis-*` | Hierodula HX-6. `-shared` is the machine, `-live` the page you drive, `-film` the recorded tour. New machines go next to it. |
+| `sims/mantis-*`, `sims/crab-*` | Hierodula HX-6 and Callinectes CB-9. `-shared` is the machine, `-live` the page you drive, `-film` the recorded tour. New machines go next to them. |
 | `sims/kit/` | Runtime, stage, shader warm-up. |
 | `sims/build.mjs` | Bundles a machine into one HTML file, three.js and fonts inlined. |
 | `sims/capture.mjs` | Renders the film frame by frame to a 60 fps mp4, or to review sheets of stills. |
 | `sfx/`, `run_sfx.py` | Procedural sound on the film's timeline, mastered to −14 LUFS. |
-| `docs/` | The HX-6 preview GIF and film. |
+| `docs/` | Preview GIFs and films of each machine. |
 
 ---
 
@@ -119,13 +124,14 @@ Claude 会把代码提交到 `main`，把视频和预览动图放进 `docs/`，�
 
 直接对 Claude 说要改的效果也可以，比如「把主色换成橙色」「拆解那段再慢一点」。
 
-### 7. 本地打开螳螂
+### 7. 本地打开已有的机器
 
 ```
-node sims/build.mjs mantis-live
+node sims/build.mjs mantis-live      # 机械螳螂 HX-6，356 个零件
+node sims/build.mjs crab-live        # 机械蓝蟹 CB-9，500 个零件
 ```
 
-然后用浏览器打开 `teardown-out/dist/mantis-live.html`。
+然后用浏览器打开 `teardown-out/dist/` 里对应的 `.html` 文件。
 
 ## License
 
