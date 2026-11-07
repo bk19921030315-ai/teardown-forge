@@ -14,6 +14,10 @@ Ask for a machine in one sentence. Claude builds it as one offline HTML page on 
 
 **Callinectes CB-9**, a robotic blue crab with 500 moving parts: [watch the 28 s film (1080p60, with sound)](docs/crab-cb9.mp4) · source in `sims/crab-*`
 
+![Manis MP-6 robotic pangolin, 600 moving parts](docs/pangolin.gif)
+
+**Manis MP-6**, a robotic pangolin with 600 moving parts: [watch the 28.5 s film (1080p60, with sound)](docs/pangolin-mp6.mp4) · source in `sims/pangolin-*`
+
 ## Install
 
 ```
@@ -41,6 +45,7 @@ Open a machine locally:
 ```
 node sims/build.mjs mantis-live      # → teardown-out/dist/mantis-live.html
 node sims/build.mjs crab-live        # → teardown-out/dist/crab-live.html
+node sims/build.mjs pangolin-live    # → teardown-out/dist/pangolin-live.html
 ```
 
 ## What is inside
@@ -48,7 +53,7 @@ node sims/build.mjs crab-live        # → teardown-out/dist/crab-live.html
 | | |
 |---|---|
 | `SKILL.md` | What Claude reads: the house style, how a machine is built, the rules that make it look right, the review loop. |
-| `sims/mantis-*`, `sims/crab-*` | Hierodula HX-6 and Callinectes CB-9. `-shared` is the machine, `-live` the page you drive, `-film` the recorded tour. New machines go next to them. |
+| `sims/mantis-*`, `sims/crab-*`, `sims/pangolin-*` | Hierodula HX-6, Callinectes CB-9 and Manis MP-6. `-shared` is the machine, `-live` the page you drive, `-film` the recorded tour. New machines go next to them. |
 | `sims/kit/` | Runtime, stage, shader warm-up. |
 | `sims/build.mjs` | Bundles a machine into one HTML file, three.js and fonts inlined. |
 | `sims/capture.mjs` | Renders the film frame by frame to a 60 fps mp4, or to review sheets of stills. |
@@ -129,6 +134,7 @@ Claude 会把代码提交到 `main`，把视频和预览动图放进 `docs/`，�
 ```
 node sims/build.mjs mantis-live      # 机械螳螂 HX-6，356 个零件
 node sims/build.mjs crab-live        # 机械蓝蟹 CB-9，500 个零件
+node sims/build.mjs pangolin-live    # 机械穿山甲 MP-6，600 个零件
 ```
 
 然后用浏览器打开 `teardown-out/dist/` 里对应的 `.html` 文件。
