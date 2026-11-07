@@ -29,11 +29,12 @@ Unless the request names another look, build on the HX-6 console. Copy `sims/man
 - **Live page.** The film as an auto tour; a click on a subsystem or chip hands over, buttons push events onto the same state function the film uses, 25 s of quiet hands back.
 - **Deliver.** `sims/<name>-shared|film|live`, the film at `--size 1600x900 --dpr 1.2` (1920 x 1080, 60 fps) muxed with its score, and the live page from `build.mjs`.
 
-## The reference machine
+## The reference machines
 
 | | The machine | What drives it | Worth stealing |
 |---|---|---|---|
 | `mantis-*` | Hierodula HX-6, a robotic praying mantis (Hierodula membranacea × 14) with 356 registered moving parts on the dark console. | One event list: walk speed and yaw rate integrated into the path and the gait phase; every other subsystem eased from its events. Legs by two-link IK, a 64 ms strike shown at 1/20. | A part registry the BUILD counter reads, an exploded view that reseats core-out, a live page whose buttons push events onto the same state function the film uses. |
+| `crab-*` | Callinectes CB-9, a robotic blue crab (Callinectes sapidus × 7) with 500 registered moving parts: crusher and cutter claws, six walking legs, two swimming paddles, a gull-wing shell over 16 gills and a pump. | The same event list; the walk integrated sideways along the body's z axis, alternating tripods, a 60 ms crusher snap shown at 1/20, the pump and the paddle scull integrated as phases. | Hitting an exact part count by tuning repeated parts (teeth, segments, lamellae), independent eyestalks, yaw-joint rams aimed in the horizontal plane. |
 
 Every machine added to `sims/` becomes a reference too: copy the closest one when you start a new machine. Each comes in 3 folders: `<name>-shared/` holds the machine, `<name>-film/` the recorded tour, `<name>-live/` the page you drive.
 
