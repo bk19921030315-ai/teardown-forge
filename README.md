@@ -40,6 +40,20 @@ One line is enough; the house style (dark console, lime accent, panels, auto tou
 
 > Teardown a hydraulic excavator arm and record the film.
 
+### From a reference picture
+
+Hand Claude one picture and it rebuilds that machine instead of inventing one: it measures the picture, writes a 10 to 12 line checklist for it, renders a grading still posed like the picture, grades every line against it, measures the dark share and the silhouette with `grade.mjs`, and stops after round 2 for your yes before anything gets filmed.
+
+> Use teardown. Read docs/method/JOB_DESCRIPTION.md, then this picture. Build a robotic tarantula with 500 moving parts and stop at the still so I can check it.
+
+The whole method is in [`docs/method/`](docs/method): the job description, the checklist format, every prompt, every lesson, and a [Chinese tutorial](docs/method/TUTORIAL.zh.md).
+
+```
+node grade.mjs compare ref.png ref.png                                    # measure the picture first
+node grade.mjs still pangolin --t 10.6 --ref ref.png --cam '{"az":-40}'   # a still on the picture's backdrop
+node grade.mjs compare ref.png teardown-out/pangolin-grade-10.6.png --out teardown-out/pangolin-r1
+```
+
 Open a machine locally:
 
 ```
@@ -58,6 +72,8 @@ node sims/build.mjs pangolin-live    # → teardown-out/dist/pangolin-live.html
 | `sims/build.mjs` | Bundles a machine into one HTML file, three.js and fonts inlined. |
 | `sims/capture.mjs` | Renders the film frame by frame to a 60 fps mp4, or to review sheets of stills. |
 | `sfx/`, `run_sfx.py` | Procedural sound on the film's timeline, mastered to −14 LUFS. |
+| `docs/method/` | The reference-picture method: job description, checklist, prompts, lessons, Chinese tutorial. |
+| `grade.mjs` | Grading stills on the picture's backdrop, side-by-side stacks, dark share and silhouette against the picture. |
 | `docs/` | Preview GIFs and films of each machine. |
 
 ---
@@ -138,6 +154,22 @@ node sims/build.mjs pangolin-live    # 机械穿山甲 MP-6，600 个零件
 ```
 
 然后用浏览器打开 `teardown-out/dist/` 里对应的 `.html` 文件。
+
+### 8. 参考图模式（照着一张图做）
+
+只用一句话做出来的机械容易像玩具。给 Claude 一张参考图，它会照图还原，流程是：
+
+1. **先量图**：量出身体比例、暗部占比（机械有多密）和轮廓。
+2. **写检查清单**：针对这张图写 10–12 条，写代码之前先给你看。
+3. **出打分静帧**：照参考图摆姿势，渲染在参考图的背景色上，和参考图并排逐条打「是 / 部分 / 否」。
+4. **实测**：暗部占比要达到参考图的 0.8，轮廓差不超过 0.05。
+5. **第 2 轮停下等你确认**：你说可以了才拍片。拍片时照搬身体最接近的已有成片，只换身体。
+
+对 Claude 说：
+
+> 用 teardown，先读 docs/method/JOB_DESCRIPTION.md，再看这张图。做一只机械狼蛛，500 个运动零件，做到静帧就停下给我看。
+
+完整中文教程在 [`docs/method/TUTORIAL.zh.md`](docs/method/TUTORIAL.zh.md)，里面有生成参考图的提示词、每一步对 Claude 说的话、检查清单的写法和踩过的坑。每次你纠正 Claude，那一条都会写进 `docs/method/JOB_DESCRIPTION.md`，下一台机器就不会再犯。
 
 ## License
 

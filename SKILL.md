@@ -1,6 +1,6 @@
 ---
 name: teardown
-description: Build an interactive 3D simulator of a real machine or mechanism (an engine, a landing gear, a walking linkage, a pump, a gearbox) as one offline HTML page people can take apart, with live panels driven by the same model that moves the parts, a button for every subsystem, cutaways, camera views and an auto tour that hands control to the visitor; then record it frame by frame to a 60 fps video with a synced procedural score. Use when someone asks how a machine works, wants a "visual explainer", a "simulator", a "cutaway", an "exploded view" or an "interactive 3D lesson", or wants a 3D object shown working rather than described.
+description: Build an interactive 3D simulator of a real machine or mechanism (an engine, a landing gear, a walking linkage, a pump, a gearbox) as one offline HTML page people can take apart, with live panels driven by the same model that moves the parts, a button for every subsystem, cutaways, camera views and an auto tour that hands control to the visitor; then record it frame by frame to a 60 fps video with a synced procedural score. Use when someone asks how a machine works, wants a "visual explainer", a "simulator", a "cutaway", an "exploded view" or an "interactive 3D lesson", or wants a 3D object shown working rather than described; or hands over a picture of a robotic animal, machine or device and wants it rebuilt in 3D, graded against the picture and filmed.
 ---
 
 # Teardown
@@ -62,13 +62,26 @@ For a machine outside `SKILL_DIR`, make a folder with a `main.js` and import the
 
 ## Rules that decide whether it works
 
-1. **Start from a reference, never from imagination.** A photo, a cutaway drawing from a manual, a clip of the real thing. Build against it and compare frame by frame. Machines invented from a sentence come out generic every time; the same model rebuilds a real one closely when it has something to match.
+1. **Start from a reference, never from imagination.** A photo, a cutaway drawing from a manual, a clip of the real thing. Build against it and compare frame by frame. Machines invented from a sentence come out generic every time; the same model rebuilds a real one closely when it has something to match. With a picture, follow the reference-picture method below.
 2. **Real numbers, one source.** Get the real dimensions first (bore, stroke, tooth count, link lengths). Every gauge, chart and label reads from the same function that poses the parts, so nothing on screen can disagree with the motion. Check one by hand: in HX-6 one gait cycle covers stride ÷ duty = 0.24 ÷ 0.66 = 0.364 m, so at 0.24 m/s the legs cycle at 0.66 Hz, which is what the LOOP readout shows.
 3. **One input drives everything.** Pose from one input (a crank angle, a stroke, the wind) or, like HX-6, one event list whose rates are integrated. Nothing is keyframed by hand, so the film, the live page and the score never drift.
 4. **The part doing the work opens up.** Isolate it, cut it, x-ray it. A camera that goes inside is worth more than ten orbits.
 5. **One accent.** The house style is the dark console; a light studio only when the request asks for one (then watch near-white parts on the pale backdrop: give them an ink outline or a darker ground). The accent marks the thing that is changing. On the dark console near-white armour blows out under the key: keep it at or below `#c0c4be` with roughness ≥ 0.5.
 6. **Pick the camera for the mechanism.** A planar linkage seen face-on collapses into a lattice; a 3/4 view along the spine keeps every leg readable.
 7. **Fix collisions with a number.** When a part pokes through another, scale or move it in the parameter block. Never hide it with the camera.
+
+## From a reference picture
+
+When the request comes with a picture (or asks to match one), the picture sets the machine's look and the work follows `docs/method/`. Read `docs/method/JOB_DESCRIPTION.md` before the first line of code and keep it open; every correction the user gives goes into it, one line per mistake, and into `docs/method/LESSONS.md`. The chrome stays the house console unless the request names another palette.
+
+1. **Measure the picture.** `node "$SKILL_DIR/grade.mjs" compare ref.png ref.png` prints its subject box, height / length, dark share (luma under 80) and a 10-slice silhouette. Read head, jaw or limb lengths off the picture as shares of the length.
+2. **Write the checklist** for this picture before the first line of code: 10 to 12 numbered lines in `docs/method/CHECKLIST.md`'s format, every vague word a number, NEVER next to the default being fought, density last. Show it to the user.
+3. **Start from the closest machine** in `sims/`. If none has a close body, say so before starting.
+4. **The still loop.** `grade.mjs still <name> --t <s> --ref ref.png --cam '{...}'` renders the machine posed like the picture on the picture's backdrop (console off, floor and props hidden, bloom off). `grade.mjs compare ref.png still.png [approved.png] --out teardown-out/<name>-r<N>` stacks reference | still | approved plus the stack 900 px wide and measures them. Grade every line yes / partial / no against the picture, plus density at 900 px. Dark share below 0.8 of the picture's or a profile off by more than 0.05 is a no.
+5. **Stop after round 2** and show the stack, the numbers and the grades. Nothing gets filmed until the user says yes.
+6. **The film** ports the closest approved film in `sims/` 1:1 (beat times, moves, distances scaled), changes the body only, and gives every beat its own camera. A 10-second version, if asked, gets its own script.
+
+`docs/method/PROMPTS.md` has every prompt from the reference picture to the score; `docs/method/TUTORIAL.zh.md` is the same method in Chinese for the user.
 
 ## Live page rules
 
